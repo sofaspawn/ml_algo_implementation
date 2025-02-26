@@ -8,3 +8,5 @@
 ### Gradient Descent:
 - this is the cost function we're optimizing for
 ![](linear_cost_function.png)
+- this is the gradient descent update rule we're using:
+![](gradient_descent.png)
