@@ -15,3 +15,5 @@
 ## 2. Logistic Regression:
 - use a sigmoid function (f(x) = 1/(1 + e^(-x))) to approximate the probablity of a certain event happening
 ![](logistic_png/sigmoid_function.png)
+- the actual function we're going to use:
+![](logistic_png/logistic.png)
