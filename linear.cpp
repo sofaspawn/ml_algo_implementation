@@ -21,11 +21,11 @@ class LinearRegression{
 
     public:
         LinearRegression(){
-            //this->weight = rand() % 11;
-            this->weight = 2.0f;
-            //this->bias = rand() % 11;
-            this->bias = 1.0f;
-            this->alpha = 0.00001;
+            this->weight = rand() % 11;
+            //this->weight = 2.0f;
+            this->bias = rand() % 11;
+            //this->bias = 1.0f;
+            this->alpha = 0.001;
         }
 
         void update_fn(vector<float> xs, vector<float> ys){
@@ -65,7 +65,7 @@ class LinearRegression{
         void fit(vector<float> xs, vector<float> ys){
             int i = 0;
             float last_los = 0;
-            int max_iterations = 100;
+            int max_iterations = 10000000;
 
             while (i < max_iterations) {
                 update_fn(xs, ys);
@@ -78,6 +78,7 @@ class LinearRegression{
 
                 // Check if the cost is converging
                 if (abs(this->cost - last_los) < 1e-6) {
+                    cout << "------------------" << endl;
                     cout << "Converged after " << i << " iterations." << endl;
                     break;
                 }
@@ -87,12 +88,27 @@ class LinearRegression{
             }
 
             cout << "------------------" << endl;
-            cout << "Steps to convergence: " << i << endl;
             cout << "Final model: y = " << this->weight << " * x + " << this->bias << endl;
             cout << "Final cost: " << this->cost << endl;
             cout << "------------------" << endl;
         }
+
+        vector<float> predict(vector<float> x_test){
+            vector<float> y_preds(x_test.size());
+            for(int i=0; i<x_test.size(); i++){
+                y_preds[i] = this->weight * x_test[i] + this->bias;
+            }
+            return y_preds;
+        }
 };
+
+float mean_abs_error(vector<float> y_test, vector<float>y_preds){
+    float sum{};
+    for(int i=0; i<y_test.size(); i++){
+        sum+=abs(y_test[i] - y_preds[i]);
+    }
+    return sum/y_test.size();
+}
 
 int main(){
     srand(time(0));
@@ -113,27 +129,27 @@ int main(){
         ys[i] = m * xs[i] + b + noise;
     }
 
-    /*
-    int train_size = 0.6*data_size;
+    int train_size = 0.6 * data_size;
     
     vector<float> x_train(train_size);
     vector<float> y_train(train_size);
+    vector<float> x_test(data_size - train_size);
+    vector<float> y_test(data_size - train_size);
 
-    int i=0;
-
-    while (i<train_size){
+    // Copy data to training set
+    for(int i = 0; i < train_size; i++) {
         x_train[i] = xs[i];
-        i+=1;
-    }
-
-    i=0;
-    while (i<train_size){
         y_train[i] = ys[i];
-        i+=1;
     }
-    */
 
+    // Copy data to testing set
+    for(int i = train_size; i < data_size; i++) {
+        x_test[i - train_size] = xs[i];
+        y_test[i - train_size] = ys[i];
+    }
     LinearRegression model = LinearRegression();
-    model.fit(xs, ys);
+    model.fit(x_train, y_train);
+    vector<float> y_preds = model.predict(x_test);
+    cout << "Mean absolute error: " << mean_abs_error(y_test, y_preds) << endl;
     //cout << "Linear regression starts here." << endl;
 }
