@@ -11,4 +11,4 @@
 - this is the gradient descent update rule we're using:
 ![](linear_png/gradient_descent.png)
 ---
-![](linear_png/convergence.png)
+- ![](linear_png/convergence.png)
