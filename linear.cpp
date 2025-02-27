@@ -150,6 +150,7 @@ int main(){
     LinearRegression model = LinearRegression();
     model.fit(x_train, y_train);
     vector<float> y_preds = model.predict(x_test);
+    cout << "Running tests..." << endl;
     cout << "Mean absolute error: " << mean_abs_error(y_test, y_preds) << endl;
     //cout << "Linear regression starts here." << endl;
 }
