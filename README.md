@@ -12,3 +12,6 @@
 ![](linear_png/gradient_descent.png)
 ---
 - ![](linear_png/convergence.png)
+## 2. Logistic Regression:
+- use a sigmoid function (f(x) = 1/(1 + e^(-x))) to approximate the probablity of a certain event happening
+![](logistic_png/sigmoid_function.png)
